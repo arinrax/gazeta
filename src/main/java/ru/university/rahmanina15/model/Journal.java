@@ -1,18 +1,23 @@
 package ru.university.rahmanina15.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Journal {
+    private UUID id;
     private String name;
     private int number;
     private LocalDate rel_date;
     private int pages_num;
+    private int quantity;
 
-    public Journal(String name, int number, LocalDate rel_date, int pages_num){
+    public Journal(String name, int number, LocalDate rel_date, int pages_num, int quantity){
+        this.id = UUID.randomUUID();
         this.name = name;
         this.number = number;
         this.rel_date = rel_date;
         this.pages_num = pages_num;
+        this.quantity = quantity;
     }
 
     public String getName(){
@@ -31,6 +36,14 @@ public class Journal {
         return pages_num;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
     public void setName(String name){
         this.name = name;
     }
@@ -45,5 +58,9 @@ public class Journal {
 
     public void setPages_num(int pages_num){
         this.pages_num = pages_num;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
