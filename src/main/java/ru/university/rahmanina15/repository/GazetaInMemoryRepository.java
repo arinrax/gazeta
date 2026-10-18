@@ -3,7 +3,7 @@ package ru.university.rahmanina15.repository;
 import ru.university.rahmanina15.model.Gazeta;
 import java.util.*;
 
-public class GazetaInMemoryRepository {
+public class GazetaInMemoryRepository implements GazetaRepository{
     private final Map<UUID, Gazeta> data;
 
     public GazetaInMemoryRepository(Map<UUID, Gazeta> data) {
@@ -15,13 +15,13 @@ public class GazetaInMemoryRepository {
     }
 
     public Gazeta create(Gazeta gazeta) {
-        var id = gazeta.getId();
+        var id = gazeta.id();
         data.put(id, gazeta);
         return gazeta;
     }
 
     public Gazeta update(Gazeta gazeta) {
-        var id = gazeta.getId();
+        var id = gazeta.id();
         data.put(id, gazeta);
         return gazeta;
     }

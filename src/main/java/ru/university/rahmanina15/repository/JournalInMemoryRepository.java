@@ -3,7 +3,7 @@ package ru.university.rahmanina15.repository;
 import ru.university.rahmanina15.model.Journal;
 import java.util.*;
 
-public class JournalInMemoryRepository {
+public class JournalInMemoryRepository implements JournalRepository {
     private final Map<UUID, Journal> data;
 
     public JournalInMemoryRepository(Map<UUID, Journal> data) {
@@ -15,13 +15,13 @@ public class JournalInMemoryRepository {
     }
 
     public Journal create(Journal journal) {
-        var id = journal.getId();
+        var id = journal.id();
         data.put(id, journal);
         return journal;
     }
 
     public Journal update(Journal journal) {
-        var id = journal.getId();
+        var id = journal.id();
         data.put(id, journal);
         return journal;
     }

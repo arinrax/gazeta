@@ -3,7 +3,7 @@ package ru.university.rahmanina15.repository;
 import ru.university.rahmanina15.model.Book;
 import java.util.*;
 
-public class BookInMemoryRepository {
+public class BookInMemoryRepository implements BookRepository {
     private final Map<UUID, Book> data;
 
     public BookInMemoryRepository(Map<UUID, Book> data) {
@@ -15,13 +15,13 @@ public class BookInMemoryRepository {
     }
 
     public Book create(Book book) {
-        var id = book.getId();
+        var id = book.id();
         data.put(id, book);
         return book;
     }
 
     public Book update(Book book) {
-        var id = book.getId();
+        var id = book.id();
         data.put(id, book);
         return book;
     }
