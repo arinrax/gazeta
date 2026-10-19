@@ -23,7 +23,7 @@ public class GazetaController {
 
     public void run() {
         while (true) {
-            System.out.println("\n--- ГАЗЕТЫ ---");
+            System.out.println("\nГАЗЕТЫ");
             System.out.println("1. Показать все газеты");
             System.out.println("2. Найти газету по ID");
             System.out.println("3. Добавить газету");
@@ -84,6 +84,10 @@ public class GazetaController {
     }
 
     private void showById() {
+        if (gazetaService.getAll().isEmpty()){
+            System.out.println("Газет нет");
+            return;
+        }
         UUID id = getUUID();
         gazetaService.getById(id)
                 .map(this::formatGazeta)
@@ -98,8 +102,8 @@ public class GazetaController {
         String name = scanner.nextLine();
 
         int number = getPositiveInt("Введите номер выпуска: ");
-        LocalDate rel_date = getDate("Введите дату выпуска (дд.ММ.гггг): ");
-        int quantity = getNonNegativeInt("Введите количество экземпляров: ");
+        LocalDate rel_date = getDate("Введите дату выпуска (дд.мм.гггг): ");
+        int quantity = getPositiveInt("Введите количество экземпляров: ");
 
         Gazeta created = gazetaService.create(name, number, rel_date, quantity);
         System.out.println("Успешно создано: " + formatGazeta(created));
@@ -114,8 +118,8 @@ public class GazetaController {
                             String name = scanner.nextLine();
 
                             int number = getPositiveInt("Введите новый номер выпуска: ");
-                            LocalDate rel_date = getDate("Введите новую дату выпуска (дд.ММ.гггг): ");
-                            int quantity = getNonNegativeInt("Введите новое количество экземпляров: ");
+                            LocalDate rel_date = getDate("Введите новую дату выпуска (дд.мм.гггг): ");
+                            int quantity = getPositiveInt("Введите новое количество экземпляров: ");
 
                             Gazeta updated = new Gazeta(id, name, number, rel_date, quantity);
                             Gazeta saved = gazetaService.update(updated);
@@ -170,7 +174,7 @@ public class GazetaController {
             try {
                 return LocalDate.parse(input, formatter);
             } catch (DateTimeParseException e) {
-                System.out.println("Неправильный формат даты. Используйте дд.ММ.гггг");
+                System.out.println("Неправильный формат даты. Используйте дд.мм.гггг");
             }
         }
     }
@@ -185,22 +189,6 @@ public class GazetaController {
                     return value;
                 }
                 System.out.println("Значение должно быть положительным");
-            } catch (NumberFormatException e) {
-                System.out.println("Введите целое число");
-            }
-        }
-    }
-
-    private int getNonNegativeInt(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine();
-            try {
-                int value = Integer.parseInt(input);
-                if (value >= 0) {
-                    return value;
-                }
-                System.out.println("Значение не может быть отрицательным");
             } catch (NumberFormatException e) {
                 System.out.println("Введите целое число");
             }

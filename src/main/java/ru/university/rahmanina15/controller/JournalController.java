@@ -23,7 +23,7 @@ public class JournalController {
 
     public void run() {
         while (true) {
-            System.out.println("\n--- ЖУРНАЛЫ ---");
+            System.out.println("\nЖУРНАЛЫ");
             System.out.println("1. Показать все журналы");
             System.out.println("2. Найти журнал по ID");
             System.out.println("3. Добавить журнал");
@@ -84,6 +84,10 @@ public class JournalController {
     }
 
     private void showById() {
+        if (journalService.getAll().isEmpty()){
+            System.out.println("Журналов нет");
+            return;
+        }
         UUID id = getUUID();
         journalService.getById(id)
                 .map(this::formatJournal)
@@ -98,9 +102,9 @@ public class JournalController {
         String name = scanner.nextLine();
 
         int number = getPositiveInt("Введите номер выпуска: ");
-        LocalDate rel_date = getDate("Введите дату выпуска (дд.ММ.гггг): ");
+        LocalDate rel_date = getDate("Введите дату выпуска (дд.мм.гггг): ");
         int pages_num = getPositiveInt("Введите количество страниц: ");
-        int quantity = getNonNegativeInt("Введите количество экземпляров: ");
+        int quantity = getPositiveInt("Введите количество экземпляров: ");
 
         Journal created = journalService.create(name, number, rel_date, pages_num, quantity);
         System.out.println("Успешно создано: " + formatJournal(created));
@@ -115,9 +119,9 @@ public class JournalController {
                             String name = scanner.nextLine();
 
                             int number = getPositiveInt("Введите новый номер выпуска: ");
-                            LocalDate rel_date = getDate("Введите новую дату выпуска (дд.ММ.гггг): ");
+                            LocalDate rel_date = getDate("Введите новую дату выпуска (дд.мм.гггг): ");
                             int pages_num = getPositiveInt("Введите новое количество страниц: ");
-                            int quantity = getNonNegativeInt("Введите новое количество экземпляров: ");
+                            int quantity = getPositiveInt("Введите новое количество экземпляров: ");
 
                             Journal updated = new Journal(id, name, number, rel_date, pages_num, quantity);
                             Journal saved = journalService.update(updated);
@@ -172,7 +176,7 @@ public class JournalController {
             try {
                 return LocalDate.parse(input, formatter);
             } catch (DateTimeParseException e) {
-                System.out.println("Неправильный формат даты. Используйте дд.ММ.гггг");
+                System.out.println("Неправильный формат даты. Используйте дд.мм.гггг");
             }
         }
     }
@@ -187,22 +191,6 @@ public class JournalController {
                     return value;
                 }
                 System.out.println("Значение должно быть положительным");
-            } catch (NumberFormatException e) {
-                System.out.println("Введите целое число");
-            }
-        }
-    }
-
-    private int getNonNegativeInt(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine();
-            try {
-                int value = Integer.parseInt(input);
-                if (value >= 0) {
-                    return value;
-                }
-                System.out.println("Значение не может быть отрицательным");
             } catch (NumberFormatException e) {
                 System.out.println("Введите целое число");
             }

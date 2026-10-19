@@ -80,6 +80,10 @@ public class BookController {
     }
 
     private void showById() {
+        if (bookService.getAll().isEmpty()) {
+            System.out.println("Книг нет");
+            return;
+        }
         UUID id = getUUID();
         bookService.getById(id)
                 .map(this::formatBook)
@@ -100,7 +104,7 @@ public class BookController {
         String izdat = scanner.nextLine();
 
         int pages_num = getPositiveInt("Введите количество страниц: ");
-        int quantity = getNonNegativeInt("Введите количество экземпляторв: ");
+        int quantity = getPositiveInt("Введите количество экземпляторв: ");
 
         Book created = bookService.create(name, author, izdat, pages_num, quantity);
         System.out.println("Успешно создано: " + formatBook(created));
@@ -121,7 +125,7 @@ public class BookController {
                             String izdat = scanner.nextLine();
 
                             int pages_num = getPositiveInt("Введите новое количество страниц: ");
-                            int quantity = getNonNegativeInt("Введите новое количество экземпляров: ");
+                            int quantity = getPositiveInt("Введите новое количество экземпляров: ");
 
                             Book updated = new Book(id, name, author, izdat, pages_num, quantity);
                             Book saved = bookService.update(updated);
@@ -178,22 +182,6 @@ public class BookController {
                     return value;
                 }
                 System.out.println("Значение должно быть положиельным");
-            } catch (NumberFormatException e) {
-                System.out.println("Введите целое число");
-            }
-        }
-    }
-
-    private int getNonNegativeInt(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine();
-            try {
-                int value = Integer.parseInt(input);
-                if (value >= 0) {
-                    return value;
-                }
-                System.out.println("Значение не может быть отрицательным");
             } catch (NumberFormatException e) {
                 System.out.println("Введите целое число");
             }
