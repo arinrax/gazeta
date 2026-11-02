@@ -13,13 +13,13 @@ public class AllCmdController {
     private final JournalController journalController;
 
     public AllCmdController(Scanner scanner,
-                            BookService bookService,
-                            GazetaService gazetaService,
-                            JournalService journalService) {
+                            BookController bookController,
+                            GazetaController gazetaController,
+                            JournalController journalController) {
         this.scanner = scanner;
-        this.bookController = new BookController(scanner, bookService);
-        this.gazetaController = new GazetaController(scanner, gazetaService);
-        this.journalController = new JournalController(scanner, journalService);
+        this.bookController = bookController;
+        this.gazetaController = gazetaController;
+        this.journalController = journalController;
     }
 
     public void run() {

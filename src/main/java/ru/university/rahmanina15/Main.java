@@ -1,6 +1,9 @@
 package ru.university.rahmanina15;
 
 import ru.university.rahmanina15.controller.AllCmdController;
+import ru.university.rahmanina15.controller.BookController;
+import ru.university.rahmanina15.controller.GazetaController;
+import ru.university.rahmanina15.controller.JournalController;
 import ru.university.rahmanina15.repository.BookInMemoryRepository;
 import ru.university.rahmanina15.repository.BookRepository;
 import ru.university.rahmanina15.repository.GazetaInMemoryRepository;
@@ -30,8 +33,11 @@ public class Main {
         JournalService journalService = new JournalService(journalRepository);
 
         Scanner scanner = new Scanner(System.in);
+        BookController bookController = new BookController(scanner, bookService);
+        GazetaController gazetaController = new GazetaController(scanner, gazetaService);
+        JournalController journalController = new JournalController(scanner, journalService);
         AllCmdController controller = new AllCmdController(
-                scanner, bookService, gazetaService, journalService
+                scanner, bookController, gazetaController, journalController
         );
 
         controller.run();
