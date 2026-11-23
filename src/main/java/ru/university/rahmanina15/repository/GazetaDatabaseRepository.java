@@ -18,7 +18,6 @@ public class GazetaDatabaseRepository implements GazetaRepository {
         this.dataSource = dataSource;
     }
 
-    @Override
     public Gazeta create(Gazeta gazeta) {
         var sql = """
             INSERT INTO gazeta(id, name, number, rel_date, quantity)
@@ -38,7 +37,6 @@ public class GazetaDatabaseRepository implements GazetaRepository {
         }
     }
 
-    @Override
     public Gazeta update(Gazeta gazeta) {
         var sql = """
             UPDATE gazeta
@@ -59,7 +57,6 @@ public class GazetaDatabaseRepository implements GazetaRepository {
         }
     }
 
-    @Override
     public boolean delete(UUID id) {
         var sql = """
             DELETE FROM gazeta
@@ -75,7 +72,6 @@ public class GazetaDatabaseRepository implements GazetaRepository {
         }
     }
 
-    @Override
     public List<Gazeta> list() {
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
@@ -94,7 +90,6 @@ public class GazetaDatabaseRepository implements GazetaRepository {
         }
     }
 
-    @Override
     public Optional<Gazeta> getById(UUID id) {
         var sql = """
             SELECT g.id, g.name, g.number, g.rel_date, g.quantity

@@ -18,7 +18,6 @@ public class JournalDatabaseRepository implements JournalRepository {
         this.dataSource = dataSource;
     }
 
-    @Override
     public Journal create(Journal journal) {
         var sql = """
             INSERT INTO journal(id, name, number, rel_date, pages_num, quantity)
@@ -39,7 +38,6 @@ public class JournalDatabaseRepository implements JournalRepository {
         }
     }
 
-    @Override
     public Journal update(Journal journal) {
         var sql = """
             UPDATE journal
@@ -61,7 +59,6 @@ public class JournalDatabaseRepository implements JournalRepository {
         }
     }
 
-    @Override
     public boolean delete(UUID id) {
         var sql = """
             DELETE FROM journal
@@ -77,7 +74,6 @@ public class JournalDatabaseRepository implements JournalRepository {
         }
     }
 
-    @Override
     public List<Journal> list() {
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
@@ -96,7 +92,6 @@ public class JournalDatabaseRepository implements JournalRepository {
         }
     }
 
-    @Override
     public Optional<Journal> getById(UUID id) {
         var sql = """
             SELECT j.id, j.name, j.number, j.rel_date, j.pages_num, j.quantity
